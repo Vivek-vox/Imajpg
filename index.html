@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Imajpg — Free Online Image Tools</title>
+  <meta name="description" content="Free online image tools. Convert, compress, and resize images instantly in your browser. No upload to server. Fast, private, free."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --border: #222222;
+      --accent: #f0e040;
+      --accent2: #40e0f0;
+      --text: #f0f0f0;
+      --text2: #888888;
+      --radius: 16px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Background grain */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -1px;
+      color: var(--text);
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 100px 40px 60px;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero p {
+      color: var(--text2);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto 48px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* TOOLS GRID */
+    .tools-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 24px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      position: relative;
+      overflow: hidden;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: var(--radius);
+    }
+
+    .tool-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+
+    .tool-card:hover::before { opacity: 0.04; }
+
+    .tool-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 16px;
+      display: block;
+      color: var(--accent);
+    }
+
+    .tool-icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .tool-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .tool-card p {
+      color: var(--text2);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .tool-tag {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(240,224,64,0.08);
+      padding: 4px 10px;
+      border-radius: 100px;
+    }
+
+    /* CONVERTER TOOL PAGE */
+    .tool-page {
+      display: none;
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
+    }
+
+    .tool-page.active { display: block; }
+    .tools-section.hidden { display: none; }
+    .hero.hidden { display: none; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text2);
+      font-size: 0.875rem;
+      cursor: pointer;
+      margin-bottom: 40px;
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.2s;
+      padding: 0;
+    }
+
+    .back-btn:hover { color: var(--text); }
+
+    .tool-page h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.2rem;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .tool-page .subtitle {
+      color: var(--text2);
+      margin-bottom: 40px;
+      font-size: 0.95rem;
+    }
+
+    /* DROP ZONE */
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 60px 40px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      background: var(--surface);
+      position: relative;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent);
+      background: rgba(240,224,64,0.03);
+    }
+
+    .dropzone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .dropzone-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      display: block;
+      color: var(--text2);
+    }
+
+    .dropzone-icon svg {
+      width: 48px;
+      height: 48px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .dropzone h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .dropzone p {
+      color: var(--text2);
+      font-size: 0.875rem;
+    }
+
+    .dropzone .browse {
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* OPTIONS */
+    .options-panel {
+      margin-top: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: none;
+    }
+
+    .options-panel.visible { display: block; }
+
+    .option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .option-row:last-child { margin-bottom: 0; }
+
+    .option-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .option-label span {
+      display: block;
+      color: var(--text2);
+      font-size: 0.78rem;
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .format-btns {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .format-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text2);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 44px;
+    }
+
+    .format-btn.active, .format-btn:hover {
+      background: var(--accent);
+      color: #000;
+      border-color: var(--accent);
+    }
+
+    .quality-slider {
+      width: 200px;
+      accent-color: var(--accent);
+    }
+
+    .quality-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 40px;
+      text-align: right;
+    }
+
+    /* FILE PREVIEW */
+    .file-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .file-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .file-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: var(--surface2);
+    }
+
+    .file-info { flex: 1; }
+
+    .file-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 300px;
+    }
+
+    .file-size {
+      font-size: 0.75rem;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .file-status {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* CONVERT BTN */
+    .convert-btn {
+      margin-top: 28px;
+      width: 100%;
+      padding: 18px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+
+    .convert-btn.visible { display: block; }
+    .convert-btn:hover { background: #fff; transform: translateY(-1px); }
+    .convert-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* RESULTS */
+    .results-section {
+      margin-top: 28px;
+      display: none;
+    }
+
+    .results-section.visible { display: block; }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .results-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .download-all-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .download-all-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .result-item {
+      background: var(--surface);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .result-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .result-info { flex: 1; }
+
+    .result-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .result-meta {
+      font-size: 0.75rem;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .result-meta .saved {
+      color: #40f080;
+      font-weight: 600;
+    }
+
+    .download-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .download-btn:hover { background: #fff; }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    footer p {
+      color: var(--text2);
+      font-size: 0.8rem;
+    }
+
+    /* PRIVACY NOTE */
+    .privacy-note {
+      text-align: center;
+      color: var(--text2);
+      font-size: 0.78rem;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge { animation: fadeUp 0.5s ease both; }
+    .hero h1 { animation: fadeUp 0.5s 0.1s ease both; }
+    .hero p { animation: fadeUp 0.5s 0.2s ease both; }
+    .tools-grid { animation: fadeUp 0.5s 0.3s ease both; }
+
+    @media (max-width: 600px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 60px 20px 40px; }
+      .tools-section, .tool-page { padding: 0 20px 60px; }
+      .quality-slider { width: 130px; }
+      footer { padding: 30px 20px; flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo" onclick="goHome()" style="cursor:pointer">ima<span>jpg</span></div>
+    <ul class="nav-links">
+      <li><a href="#tools">Tools</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-badge">100% Private — Files never leave your device</div>
+    <h1>Image tools,<br><em>beautifully simple.</em></h1>
+    <p>Convert, compress, and resize images instantly in your browser. No signup. No uploads. Completely free.</p>
+  </section>
+
+  <!-- TOOLS GRID -->
+  <section class="tools-section" id="toolsSection">
+    <div id="tools"></div>
+    <p class="section-label">All Tools</p>
+    <div class="tools-grid">
+
+      <a class="tool-card" onclick="openTool('convert')">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg></span>
+        <h3>Image Converter</h3>
+        <p>Convert images between JPG, PNG, WEBP, and BMP formats instantly.</p>
+        <span class="tool-tag">Convert</span>
+      </a>
+
+      <a class="tool-card" onclick="openTool('compress')">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="10" y1="14" x2="21" y2="3"/><line x1="3" y1="21" x2="14" y2="10"/></svg></span>
+        <h3>Image Compressor</h3>
+        <p>Reduce image file size without losing visible quality. Perfect for web.</p>
+        <span class="tool-tag">Compress</span>
+      </a>
+
+      <a class="tool-card" onclick="openTool('resize')">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><polyline points="9 3 9 9 3 9"/><polyline points="15 21 15 15 21 15"/></svg></span>
+        <h3>Image Resizer</h3>
+        <p>Resize images to any dimension. Maintain aspect ratio automatically.</p>
+        <span class="tool-tag">Resize</span>
+      </a>
+
+      <a class="tool-card" onclick="openTool('convert')">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></span>
+        <h3>JPG to PNG</h3>
+        <p>Convert JPG images to PNG with transparency support in seconds.</p>
+        <span class="tool-tag">Convert</span>
+      </a>
+
+      <a class="tool-card" onclick="openTool('convert')">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+        <h3>PNG to JPG</h3>
+        <p>Convert PNG images to JPG for smaller file sizes and wider compatibility.</p>
+        <span class="tool-tag">Convert</span>
+      </a>
+
+      <a class="tool-card" onclick="openTool('convert')">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+        <h3>Convert to WEBP</h3>
+        <p>Convert any image to modern WEBP format for faster websites.</p>
+        <span class="tool-tag">Convert</span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- TOOL PAGE -->
+  <section class="tool-page" id="toolPage">
+    <button class="back-btn" onclick="goHome()">← Back to all tools</button>
+    <h2 id="toolTitle">Image Converter</h2>
+    <p class="subtitle" id="toolSubtitle">Convert your images to any format instantly.</p>
+
+    <!-- DROP ZONE -->
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept="image/*" multiple />
+      <span class="dropzone-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+      <h3>Drop images here</h3>
+      <p>or <span class="browse">browse files</span> — JPG, PNG, WEBP, BMP supported</p>
+    </div>
+
+    <div class="file-list" id="fileList"></div>
+
+    <!-- OPTIONS -->
+    <div class="options-panel" id="optionsPanel">
+
+      <!-- Convert options -->
+      <div id="convertOptions">
+        <div class="option-row">
+          <div class="option-label">
+            Convert to
+            <span>Choose output format</span>
+          </div>
+          <div class="format-btns">
+            <button class="format-btn active" data-format="image/jpeg" onclick="selectFormat(this)">JPG</button>
+            <button class="format-btn" data-format="image/png" onclick="selectFormat(this)">PNG</button>
+            <button class="format-btn" data-format="image/webp" onclick="selectFormat(this)">WEBP</button>
+            <button class="format-btn" data-format="image/bmp" onclick="selectFormat(this)">BMP</button>
+          </div>
+        </div>
+        <div class="option-row">
+          <div class="option-label">
+            Quality
+            <span>Higher = better quality, larger file</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <input type="range" class="quality-slider" id="qualitySlider" min="10" max="100" value="92"
+              oninput="document.getElementById('qualityValue').textContent=this.value+'%'"/>
+            <span class="quality-value" id="qualityValue">92%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resize options -->
+      <div id="resizeOptions" style="display:none">
+        <div class="option-row">
+          <div class="option-label">Width <span>pixels</span></div>
+          <input type="number" id="resizeWidth" placeholder="e.g. 1920" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;width:140px"/>
+        </div>
+        <div class="option-row">
+          <div class="option-label">Height <span>pixels (leave blank to auto)</span></div>
+          <input type="number" id="resizeHeight" placeholder="auto" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;width:140px"/>
+        </div>
+      </div>
+
+      <!-- Compress options -->
+      <div id="compressOptions" style="display:none">
+        <div class="option-row">
+          <div class="option-label">
+            Compression level
+            <span>Lower = smaller file, less quality</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px">
+            <input type="range" class="quality-slider" id="compressSlider" min="10" max="95" value="70"
+              oninput="document.getElementById('compressValue').textContent=this.value+'%'"/>
+            <span class="quality-value" id="compressValue">70%</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="privacy-note">Your files are processed entirely in your browser. Nothing is uploaded to any server.</p>
+
+    <button class="convert-btn" id="convertBtn" onclick="processFiles()">Convert Images</button>
+
+    <!-- RESULTS -->
+    <div class="results-section" id="resultsSection">
+      <div class="results-header">
+        <span class="results-title">Done — Download your files</span>
+        <button class="download-all-btn" id="downloadAllBtn">Download All</button>
+      </div>
+      <div id="resultsList"></div>
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="about">
+    <div class="footer-logo">ima<span>jpg</span></div>
+    <p>Free image tools. No signup. No uploads. Forever free.</p>
+    <p style="color:#444;font-size:0.75rem">© 2025 Imajpg. All processing done in your browser.</p>
+  </footer>
+
+  <script>
+    let currentTool = 'convert';
+    let selectedFiles = [];
+    let selectedFormat = 'image/jpeg';
+    let processedBlobs = [];
+
+    // ---- NAVIGATION ----
+    function openTool(tool) {
+      currentTool = tool;
+      document.getElementById('hero').classList.add('hidden');
+      document.getElementById('toolsSection').classList.add('hidden');
+      document.getElementById('toolPage').classList.add('active');
+
+      // Reset state
+      selectedFiles = [];
+      processedBlobs = [];
+      document.getElementById('fileList').innerHTML = '';
+      document.getElementById('resultsList').innerHTML = '';
+      document.getElementById('resultsSection').classList.remove('visible');
+      document.getElementById('convertBtn').classList.remove('visible');
+      document.getElementById('optionsPanel').classList.remove('visible');
+      document.getElementById('fileInput').value = '';
+
+      // Set tool UI
+      const titles = {
+        convert: ['Image Converter', 'Convert images between JPG, PNG, WEBP, and BMP formats.'],
+        compress: ['Image Compressor', 'Reduce file size without losing visible quality.'],
+        resize: ['Image Resizer', 'Resize images to any custom dimension.']
+      };
+      document.getElementById('toolTitle').textContent = titles[tool][0];
+      document.getElementById('toolSubtitle').textContent = titles[tool][1];
+      document.getElementById('convertBtn').textContent =
+        tool === 'convert' ? 'Convert Images' :
+        tool === 'compress' ? 'Compress Images' : 'Resize Images';
+
+      // Show relevant options
+      document.getElementById('convertOptions').style.display = tool === 'convert' ? 'block' : 'none';
+      document.getElementById('compressOptions').style.display = tool === 'compress' ? 'block' : 'none';
+      document.getElementById('resizeOptions').style.display = tool === 'resize' ? 'block' : 'none';
+    }
+
+    function goHome() {
+      document.getElementById('hero').classList.remove('hidden');
+      document.getElementById('toolsSection').classList.remove('hidden');
+      document.getElementById('toolPage').classList.remove('active');
+    }
+
+    // ---- FORMAT SELECTION ----
+    function selectFormat(btn) {
+      document.querySelectorAll('.format-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedFormat = btn.dataset.format;
+    }
+
+    // ---- FILE INPUT ----
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+
+    function handleFiles(files) {
+      selectedFiles = Array.from(files).filter(f => f.type.startsWith('image/'));
+      if (!selectedFiles.length) return;
+
+      document.getElementById('fileList').innerHTML = '';
+      document.getElementById('resultsSection').classList.remove('visible');
+      document.getElementById('resultsList').innerHTML = '';
+      processedBlobs = [];
+
+      selectedFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const item = document.createElement('div');
+          item.className = 'file-item';
+          item.innerHTML = `
+            <img src="${e.target.result}" class="file-thumb" alt="${file.name}"/>
+            <div class="file-info">
+              <div class="file-name">${file.name}</div>
+              <div class="file-size">${formatSize(file.size)}</div>
+            </div>
+            <span class="file-status">Ready</span>
+          `;
+          document.getElementById('fileList').appendChild(item);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      document.getElementById('optionsPanel').classList.add('visible');
+      document.getElementById('convertBtn').classList.add('visible');
+    }
+
+    // ---- PROCESSING ----
+    async function processFiles() {
+      const btn = document.getElementById('convertBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processing...';
+      processedBlobs = [];
+
+      const resultsList = document.getElementById('resultsList');
+      resultsList.innerHTML = '';
+      document.getElementById('resultsSection').classList.add('visible');
+
+      for (const file of selectedFiles) {
+        const blob = await processImage(file);
+        processedBlobs.push({ blob, originalName: file.name, originalSize: file.size });
+
+        const ext = getExtension(currentTool === 'convert' ? selectedFormat :
+                    currentTool === 'compress' ? file.type : file.type);
+        const newName = stripExtension(file.name) + '.' + ext;
+        const url = URL.createObjectURL(blob);
+        const saved = Math.round((1 - blob.size / file.size) * 100);
+
+        const item = document.createElement('div');
+        item.className = 'result-item';
+        item.innerHTML = `
+          <img src="${url}" class="result-thumb" alt="${newName}"/>
+          <div class="result-info">
+            <div class="result-name">${newName}</div>
+            <div class="result-meta">
+              ${formatSize(file.size)} → ${formatSize(blob.size)}
+              ${saved > 0 ? `<span class="saved"> · ${saved}% smaller</span>` : ''}
+            </div>
+          </div>
+          <a href="${url}" download="${newName}" class="download-btn">Download</a>
+        `;
+        resultsList.appendChild(item);
+      }
+
+      btn.disabled = false;
+      btn.textContent = currentTool === 'convert' ? 'Convert Again' :
+                        currentTool === 'compress' ? 'Compress Again' : 'Resize Again';
+
+      // Download all button
+      document.getElementById('downloadAllBtn').onclick = () => {
+        processedBlobs.forEach(({ blob, originalName }) => {
+          const ext = getExtension(currentTool === 'convert' ? selectedFormat : blob.type);
+          const name = stripExtension(originalName) + '.' + ext;
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(blob);
+          a.download = name;
+          a.click();
+        });
+      };
+    }
+
+    function processImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+
+            if (currentTool === 'resize') {
+              const targetW = parseInt(document.getElementById('resizeWidth').value) || img.width;
+              const ratio = targetW / img.width;
+              const targetH = parseInt(document.getElementById('resizeHeight').value) || Math.round(img.height * ratio);
+              canvas.width = targetW;
+              canvas.height = targetH;
+            } else {
+              canvas.width = img.width;
+              canvas.height = img.height;
+            }
+
+            const ctx = canvas.getContext('2d');
+
+            // White background for JPG conversion (transparency → white)
+            const outputFormat = currentTool === 'convert' ? selectedFormat :
+                                 currentTool === 'compress' ? 'image/jpeg' : file.type;
+            if (outputFormat === 'image/jpeg') {
+              ctx.fillStyle = '#ffffff';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            const quality = currentTool === 'compress'
+              ? parseInt(document.getElementById('compressSlider').value) / 100
+              : parseInt(document.getElementById('qualitySlider').value) / 100;
+
+            canvas.toBlob(blob => resolve(blob), outputFormat, quality);
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ---- HELPERS ----
+    function formatSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    function getExtension(mimeType) {
+      const map = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/bmp': 'bmp' };
+      return map[mimeType] || 'jpg';
+    }
+
+    function stripExtension(filename) {
+      return filename.replace(/\.[^/.]+$/, '');
+    }
+  </script>
+</body>
+</html>
