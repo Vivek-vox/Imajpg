@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Privacy Policy — Imajpg Free Image Tools</title>
+  <meta name="description" content="Imajpg Privacy Policy. We don't collect your images or personal data. All image processing happens locally in your browser. No uploads, no tracking."/>
+  <meta name="keywords" content="imajpg privacy policy, image tools privacy, no data collection, browser image processing"/>
+  <link rel="canonical" href="https://imajpg.vercel.app/privacy.html"/>
+  <meta property="og:title" content="Privacy Policy — Imajpg"/>
+  <meta property="og:description" content="Imajpg does not collect your images or personal data. All processing is local to your browser."/>
+  <meta property="og:url" content="https://imajpg.vercel.app/privacy.html"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --border: #222222;
+      --accent: #f0e040;
+      --text: #f0f0f0;
+      --text2: #888888;
+      --radius: 16px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px clamp(20px, 4vw, 40px);
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+
+    /* PAGE */
+    .page-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: clamp(50px, 8vw, 80px) clamp(20px, 4vw, 40px) 100px;
+    }
+
+    .page-badge {
+      display: inline-block;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      letter-spacing: -2px;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .page-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .last-updated {
+      color: var(--text2);
+      font-size: 0.85rem;
+      margin-bottom: 60px;
+    }
+
+    /* POLICY SECTIONS */
+    .policy-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+      margin-bottom: 16px;
+    }
+
+    .policy-section h2 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .policy-section h2 .section-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      background: rgba(240,224,64,0.1);
+      border: 1px solid rgba(240,224,64,0.2);
+      border-radius: 6px;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .policy-section p {
+      color: var(--text2);
+      font-size: 0.925rem;
+      line-height: 1.8;
+    }
+
+    .policy-section p + p {
+      margin-top: 14px;
+    }
+
+    .policy-section ul {
+      margin-top: 12px;
+      padding-left: 0;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .policy-section ul li {
+      color: var(--text2);
+      font-size: 0.925rem;
+      line-height: 1.7;
+      padding-left: 18px;
+      position: relative;
+    }
+
+    .policy-section ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-size: 0.8rem;
+    }
+
+    .accent-link {
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(240,224,64,0.3);
+      transition: border-color 0.2s;
+    }
+
+    .accent-link:hover { border-color: var(--accent); }
+
+    /* HIGHLIGHT BOX */
+    .highlight-box {
+      background: rgba(240,224,64,0.05);
+      border: 1px solid rgba(240,224,64,0.15);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .highlight-box-icon {
+      width: 22px;
+      height: 22px;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .highlight-box-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .highlight-box p {
+      color: var(--text);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 40px clamp(20px, 4vw, 40px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-contact {
+      color: var(--text2);
+      font-size: 0.8rem;
+    }
+
+    .footer-contact a {
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--accent); }
+
+    .footer-copy {
+      width: 100%;
+      color: #444;
+      font-size: 0.75rem;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-badge { animation: fadeUp 0.5s ease both; }
+    .page-title { animation: fadeUp 0.5s 0.1s ease both; }
+    .last-updated { animation: fadeUp 0.5s 0.15s ease both; }
+    .highlight-box { animation: fadeUp 0.5s 0.2s ease both; }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .policy-section { padding: 24px 20px; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; flex-wrap: wrap; }
+    }
+  <!-- Google AdSense — paste your AdSense script tag here when approved -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="logo" href="index.html">ima<span>jpg</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="privacy.html" class="active">Privacy</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="page-badge">Privacy Policy</div>
+    <h1 class="page-title">Your data.<br><em>Your business.</em></h1>
+    <p class="last-updated">Last updated: March 2026 &nbsp;·&nbsp; Applies to imajpg.vercel.app</p>
+
+    <div class="highlight-box">
+      <div class="highlight-box-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <p>The short version: imajpg does not collect, store, or transmit your images or personal data. All image processing happens entirely within your browser. We have no access to your files.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">1</span> Who We Are</h2>
+      <p>Imajpg is a free, browser-based image toolkit operated by Atom_Wrek, accessible at <a class="accent-link" href="https://imajpg.vercel.app">imajpg.vercel.app</a>. For any privacy-related questions, contact us at <a class="accent-link" href="mailto:atom-wrek@proton.me">atom-wrek@proton.me</a>.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">2</span> Information We Do Not Collect</h2>
+      <p>Imajpg does not collect, process, or store any of the following:</p>
+      <ul>
+        <li>The images or files you upload or process using our tools</li>
+        <li>Your name, email address, or any personal identifying information</li>
+        <li>Your account details (we have no accounts or login system)</li>
+        <li>Your location or IP address beyond what your browser or hosting provider may log at the network level</li>
+      </ul>
+      <p>All image conversion, compression, and resizing operations are performed locally in your browser using the HTML5 Canvas API. No file data is ever transmitted to any server.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">3</span> Cookies and Tracking</h2>
+      <p>Imajpg itself does not use cookies or any first-party tracking technology. However, third-party services used on this site may set cookies on your device.</p>
+      <p>Specifically, we display advertisements through <strong style="color:var(--text)">Google AdSense</strong>. Google uses cookies to serve ads based on your prior visits to this and other websites. Google's use of advertising cookies enables it and its partners to serve ads based on your visit to imajpg and other sites on the internet.</p>
+      <p>You may opt out of personalised advertising by visiting <a class="accent-link" href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a>. You can also opt out of a third-party vendor's use of cookies for personalised advertising by visiting <a class="accent-link" href="https://www.aboutads.info" target="_blank" rel="noopener">aboutads.info</a>.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">4</span> Third-Party Services</h2>
+      <p>Imajpg uses a small number of third-party services to operate:</p>
+      <ul>
+        <li><strong style="color:var(--text)">Vercel</strong> — our hosting provider. Vercel may collect standard server access logs (IP addresses, browser type, pages visited) as part of normal hosting operations. See <a class="accent-link" href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Vercel's Privacy Policy</a>.</li>
+        <li><strong style="color:var(--text)">Google Fonts</strong> — we load fonts from Google's servers. This involves your browser making a request to Google, which may log your IP address. See <a class="accent-link" href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+        <li><strong style="color:var(--text)">Google AdSense</strong> — we display advertisements. Google may use cookies to personalise ads shown to you. See <a class="accent-link" href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">Google's Advertising Policy</a>.</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">5</span> Your Image Files</h2>
+      <p>To be explicitly clear: the files you process using imajpg are handled entirely within your own browser. When you select or drop an image file, it is read by your browser's local file API. When you convert, compress, or resize it, those operations are performed by JavaScript running in your browser tab using the HTML5 Canvas API.</p>
+      <p>At no point does your image file leave your device or get transmitted over the internet to any server — including ours.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">6</span> Children's Privacy</h2>
+      <p>Imajpg does not knowingly collect any information from children under the age of 13. The site does not require registration or any personal information to use. If you believe a child has somehow provided personal information through this site, please contact us at <a class="accent-link" href="mailto:atom-wrek@proton.me">atom-wrek@proton.me</a> and we will address it promptly.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">7</span> Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time, particularly as new tools or third-party services are added to the site. The "Last updated" date at the top of this page will reflect any changes. Continued use of imajpg after any changes constitutes acceptance of the updated policy.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">8</span> Your Rights — GDPR &amp; CCPA</h2>
+      <p>Depending on where you are located, you may have certain rights regarding your personal data under applicable law, including the General Data Protection Regulation (GDPR) for users in the European Economic Area, and the California Consumer Privacy Act (CCPA) for residents of California.</p>
+      <p>Because imajpg does not collect or store any personal data from its users, there is in practice no data held on you that can be accessed, corrected, or deleted. However, if you have any concern or wish to make a data-related request, you are welcome to contact us at <a class="accent-link" href="mailto:atom-wrek@proton.me">atom-wrek@proton.me</a> and we will respond within 48 hours.</p>
+      <p>For data processed by third-party services such as Google (AdSense, Fonts) or Vercel, please refer directly to their respective privacy policies linked in Section 4.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2><span class="section-num">9</span> Contact</h2>
+      <p>If you have any questions about this Privacy Policy or how imajpg handles data, you can reach us at <a class="accent-link" href="mailto:atom-wrek@proton.me">atom-wrek@proton.me</a>. We will respond within 48 hours.</p>
+    </div>
+
+  </div>
+
+  <footer>
+    <a class="footer-logo" href="index.html">ima<span>jpg</span></a>
+    <ul class="footer-links">
+      <li><a href="index.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+    <div class="footer-contact">
+      <span style="color:#555;font-size:0.75rem;display:block;margin-bottom:3px;letter-spacing:1px;text-transform:uppercase;font-weight:600">Contact</span>
+      <a href="mailto:atom-wrek@proton.me">atom-wrek@proton.me</a>
+    </div>
+    <div class="footer-copy">
+      © <span id="footerYear"></span> Imajpg · A project by Atom_Wrek · All processing done in your browser.
+    </div>
+  </footer>
+
+  <script>
+    const y = new Date().getFullYear();
+    document.getElementById('footerYear').textContent = y > 2026 ? `2026–${y}` : '2026';
+  </script>
+
+</body>
+</html>

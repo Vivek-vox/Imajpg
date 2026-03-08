@@ -3,11 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Imajpg — Free Online Image Tools</title>
-  <meta name="description" content="Free online image tools. Convert, compress, and resize images instantly in your browser. No upload to server. Fast, private, free."/>
+  <title>Imajpg — Free Online Image Converter, Compressor &amp; Resizer</title>
+  <meta name="description" content="Convert JPG to PNG, compress images, resize photos and more — free, instant, and 100% private. No upload to server, no signup required. Works in your browser."/>
+  <meta name="keywords" content="image converter, jpg to png, png to jpg, convert to webp, compress image, resize image online, free image tools, image compressor, reduce image size, no upload image converter"/>
+  <link rel="canonical" href="https://imajpg.vercel.app/"/>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Imajpg — Free Online Image Tools"/>
+  <meta property="og:description" content="Convert, compress, and resize images instantly in your browser. No upload, no signup, completely free and private."/>
+  <meta property="og:url" content="https://imajpg.vercel.app/"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="Imajpg — Free Online Image Tools"/>
+  <meta name="twitter:description" content="Convert, compress, and resize images free in your browser. No upload, no signup."/>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    html { scroll-behavior: smooth; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
@@ -16,7 +29,6 @@
       --surface2: #1a1a1a;
       --border: #222222;
       --accent: #f0e040;
-      --accent2: #40e0f0;
       --text: #f0f0f0;
       --text2: #888888;
       --radius: 16px;
@@ -49,7 +61,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 20px 40px;
+      padding: 20px clamp(20px, 4vw, 40px);
       background: rgba(10,10,10,0.85);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
@@ -61,6 +73,7 @@
       font-size: 1.6rem;
       letter-spacing: -1px;
       color: var(--text);
+      text-decoration: none;
     }
 
     .logo span {
@@ -87,7 +100,7 @@
     .hero {
       position: relative;
       text-align: center;
-      padding: 100px 40px 60px;
+      padding: clamp(60px, 10vw, 100px) clamp(20px, 4vw, 40px) clamp(40px, 6vw, 60px);
       z-index: 1;
     }
 
@@ -134,7 +147,7 @@
       z-index: 1;
       max-width: 1100px;
       margin: 0 auto;
-      padding: 0 40px 80px;
+      padding: 0 clamp(20px, 4vw, 40px) 80px;
     }
 
     .section-label {
@@ -148,7 +161,7 @@
 
     .tools-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
       gap: 16px;
     }
 
@@ -237,7 +250,7 @@
       z-index: 1;
       max-width: 800px;
       margin: 0 auto;
-      padding: 40px 40px 80px;
+      padding: clamp(24px, 4vw, 40px) clamp(20px, 4vw, 40px) 80px;
     }
 
     .tool-page.active { display: block; }
@@ -247,24 +260,22 @@
     .back-btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      justify-content: center;
       color: var(--text2);
-      font-size: 0.875rem;
       cursor: pointer;
       margin-bottom: 40px;
       background: none;
       border: none;
-      font-family: 'DM Sans', sans-serif;
-      transition: color 0.2s;
       padding: 0;
+      transition: color 0.2s;
     }
 
-    .back-btn:hover { color: var(--text); }
+    .back-btn:hover { color: var(--accent); }
 
     .tool-page h2 {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 2.2rem;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
       letter-spacing: -1px;
       margin-bottom: 8px;
     }
@@ -279,7 +290,7 @@
     .dropzone {
       border: 2px dashed var(--border);
       border-radius: var(--radius);
-      padding: 60px 40px;
+      padding: clamp(32px, 6vw, 60px) clamp(20px, 4vw, 40px);
       text-align: center;
       cursor: pointer;
       transition: all 0.25s;
@@ -401,7 +412,7 @@
     }
 
     .quality-slider {
-      width: 200px;
+      width: clamp(120px, 20vw, 200px);
       accent-color: var(--accent);
     }
 
@@ -447,7 +458,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 300px;
+      max-width: min(300px, 100%);
     }
 
     .file-size {
@@ -581,11 +592,11 @@
       position: relative;
       z-index: 1;
       border-top: 1px solid var(--border);
-      padding: 40px;
+      padding: 40px clamp(20px, 4vw, 40px);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: gap;
+      flex-wrap: wrap;
       gap: 20px;
     }
 
@@ -593,13 +604,46 @@
       font-family: 'Syne', sans-serif;
       font-weight: 800;
       font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--text);
     }
 
     .footer-logo span { color: var(--accent); }
 
-    footer p {
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-contact {
       color: var(--text2);
       font-size: 0.8rem;
+    }
+
+    .footer-contact a {
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--accent); }
+
+    .footer-copy {
+      width: 100%;
+      color: #444;
+      font-size: 0.75rem;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
     }
 
     /* PRIVACY NOTE */
@@ -626,23 +670,26 @@
     .tools-grid { animation: fadeUp 0.5s 0.3s ease both; }
 
     @media (max-width: 600px) {
-      nav { padding: 16px 20px; }
       .nav-links { display: none; }
-      .hero { padding: 60px 20px 40px; }
-      .tools-section, .tool-page { padding: 0 20px 60px; }
-      .quality-slider { width: 130px; }
-      footer { padding: 30px 20px; flex-direction: column; text-align: center; }
+      .tools-section, .tool-page { padding-top: 20px; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; flex-wrap: wrap; }
+      .option-row { flex-direction: column; align-items: flex-start; }
     }
-  </style>
+  <!-- Google AdSense — paste your AdSense script tag here when approved -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+</style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav>
-    <div class="logo" onclick="goHome()" style="cursor:pointer">ima<span>jpg</span></div>
+    <a class="logo" href="index.html" onclick="goHome(); return false;">ima<span>jpg</span></a>
     <ul class="nav-links">
-      <li><a href="#tools">Tools</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a href="index.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
     </ul>
   </nav>
 
@@ -706,7 +753,9 @@
 
   <!-- TOOL PAGE -->
   <section class="tool-page" id="toolPage">
-    <button class="back-btn" onclick="goHome()">← Back to all tools</button>
+    <button class="back-btn" onclick="goHome()" title="Back to all tools">
+      <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+    </button>
     <h2 id="toolTitle">Image Converter</h2>
     <p class="subtitle" id="toolSubtitle">Convert your images to any format instantly.</p>
 
@@ -754,11 +803,11 @@
       <div id="resizeOptions" style="display:none">
         <div class="option-row">
           <div class="option-label">Width <span>pixels</span></div>
-          <input type="number" id="resizeWidth" placeholder="e.g. 1920" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;width:140px"/>
+          <input type="number" id="resizeWidth" placeholder="e.g. 1920" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;width:clamp(100px,30vw,140px)"/>
         </div>
         <div class="option-row">
           <div class="option-label">Height <span>pixels (leave blank to auto)</span></div>
-          <input type="number" id="resizeHeight" placeholder="auto" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;width:140px"/>
+          <input type="number" id="resizeHeight" placeholder="auto" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:8px 14px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;width:clamp(100px,30vw,140px)"/>
         </div>
       </div>
 
@@ -795,13 +844,27 @@
   </section>
 
   <!-- FOOTER -->
-  <footer id="about">
-    <div class="footer-logo">ima<span>jpg</span></div>
-    <p>Free image tools. No signup. No uploads. Forever free.</p>
-    <p style="color:#444;font-size:0.75rem">© 2025 Imajpg. All processing done in your browser.</p>
+  <footer>
+    <a class="footer-logo" href="index.html">ima<span>jpg</span></a>
+    <ul class="footer-links">
+      <li><a href="index.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+    <div class="footer-contact">
+      <span style="color:#555;font-size:0.75rem;display:block;margin-bottom:3px;letter-spacing:1px;text-transform:uppercase;font-weight:600">Contact</span>
+      <a href="mailto:atom-wrek@proton.me">atom-wrek@proton.me</a>
+    </div>
+    <div class="footer-copy">
+      © <span id="footerYear"></span> Imajpg · A project by Atom_Wrek · All processing done in your browser.
+    </div>
   </footer>
 
   <script>
+    const y = new Date().getFullYear();
+    document.getElementById('footerYear').textContent = y > 2026 ? `2026–${y}` : '2026';
+
     let currentTool = 'convert';
     let selectedFiles = [];
     let selectedFormat = 'image/jpeg';
