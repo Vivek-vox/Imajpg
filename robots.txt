@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://imajpg.vercel.app/sitemap.xml
+
