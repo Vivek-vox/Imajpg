@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="google-site-verification" content="XHKjR7szEqAALT775m7MDb8_a_vCr9xGzZujBGJyCfo" />
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Imajpg — Free Online Image Converter, Compressor &amp; Resizer</title>
@@ -749,6 +748,20 @@
         <span class="tool-tag">Convert</span>
       </a>
 
+      <a class="tool-card" href="rotate.html">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></span>
+        <h3>Rotate &amp; Flip</h3>
+        <p>Rotate images 90°, 180°, or flip horizontally and vertically.</p>
+        <span class="tool-tag">Transform</span>
+      </a>
+
+      <a class="tool-card" href="grayscale.html">
+        <span class="tool-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 6a6 6 0 0 1 0 12"/><line x1="12" y1="2" x2="12" y2="22"/></svg></span>
+        <h3>Grayscale &amp; B&amp;W</h3>
+        <p>Convert images to grayscale or high-contrast black and white.</p>
+        <span class="tool-tag">Filter</span>
+      </a>
+
     </div>
   </section>
 
@@ -1069,13 +1082,4 @@
     }
 
     function getExtension(mimeType) {
-      const map = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/bmp': 'bmp' };
-      return map[mimeType] || 'jpg';
-    }
-
-    function stripExtension(filename) {
-      return filename.replace(/\.[^/.]+$/, '');
-    }
-  </script>
-</body>
-</html>
+      const map = { 'image/j

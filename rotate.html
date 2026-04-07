@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rotate &amp; Flip Images Online Free — Imajpg</title>
+  <meta name="description" content="Rotate images 90°, 180°, or flip horizontally and vertically — free, instant, and 100% private. No upload to server, no signup required. Works entirely in your browser."/>
+  <meta name="keywords" content="rotate image online free, flip image online, rotate jpg online, flip image horizontally, rotate photo 90 degrees, mirror image online, image rotator no upload, rotate image no signup"/>
+  <link rel="canonical" href="https://imajpg.vercel.app/rotate.html"/>
+  <!-- Open Graph -->
+  <meta property="og:title" content="Rotate &amp; Flip Images — Imajpg"/>
+  <meta property="og:description" content="Rotate and flip images instantly in your browser. 90°, 180°, flip horizontal or vertical. No upload, no signup, completely free."/>
+  <meta property="og:url" content="https://imajpg.vercel.app/rotate.html"/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary"/>
+  <meta name="twitter:title" content="Rotate &amp; Flip Images — Imajpg"/>
+  <meta name="twitter:description" content="Rotate and flip images free in your browser. No upload, no signup."/>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg"/>
+  <!-- Google AdSense — paste your AdSense script tag here when approved -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --surface2: #1a1a1a;
+      --border: #222222;
+      --accent: #f0e040;
+      --text: #f0f0f0;
+      --text2: #888888;
+      --radius: 16px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px clamp(20px, 4vw, 40px);
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.6rem;
+      letter-spacing: -1px;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* TOOL PAGE */
+    .tool-page {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 48px) clamp(20px, 4vw, 40px) 80px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text2);
+      text-decoration: none;
+      margin-bottom: 40px;
+      transition: color 0.2s;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .back-btn svg {
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .back-btn:hover { color: var(--accent); }
+
+    .tool-page h1 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .subtitle {
+      color: var(--text2);
+      margin-bottom: 36px;
+      font-size: 0.95rem;
+      animation: fadeUp 0.5s 0.1s ease both;
+    }
+
+    /* DROP ZONE */
+    .dropzone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: clamp(32px, 6vw, 60px) clamp(20px, 4vw, 40px);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      background: var(--surface);
+      position: relative;
+      animation: fadeUp 0.5s 0.15s ease both;
+    }
+
+    .dropzone:hover, .dropzone.dragover {
+      border-color: var(--accent);
+      background: rgba(240,224,64,0.03);
+    }
+
+    .dropzone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+    }
+
+    .dropzone-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 16px;
+      display: block;
+      color: var(--text2);
+    }
+
+    .dropzone-icon svg {
+      width: 48px;
+      height: 48px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .dropzone h3 {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .dropzone p {
+      color: var(--text2);
+      font-size: 0.875rem;
+    }
+
+    .dropzone .browse {
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    /* OPTIONS PANEL */
+    .options-panel {
+      margin-top: 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: none;
+    }
+
+    .options-panel.visible { display: block; }
+
+    .option-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 16px;
+    }
+
+    .transform-btns {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
+      gap: 10px;
+    }
+
+    .transform-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 48px;
+    }
+
+    .transform-btn svg {
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+    }
+
+    .transform-btn.active {
+      background: rgba(240,224,64,0.1);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .transform-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* FILE LIST */
+    .file-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .file-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .file-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: var(--surface2);
+    }
+
+    .file-info { flex: 1; min-width: 0; }
+
+    .file-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: min(300px, 100%);
+    }
+
+    .file-size {
+      font-size: 0.75rem;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    /* PROCESS BTN */
+    .convert-btn {
+      margin-top: 28px;
+      width: 100%;
+      padding: 18px;
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+
+    .convert-btn.visible { display: block; }
+    .convert-btn:hover { background: #fff; transform: translateY(-1px); }
+    .convert-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    /* PRIVACY NOTE */
+    .privacy-note {
+      text-align: center;
+      color: var(--text2);
+      font-size: 0.78rem;
+      margin-top: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* RESULTS */
+    .results-section {
+      margin-top: 28px;
+      display: none;
+    }
+
+    .results-section.visible { display: block; }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .results-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .download-all-btn {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .download-all-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .result-item {
+      background: var(--surface);
+      border: 1px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .result-thumb {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .result-info { flex: 1; min-width: 0; }
+
+    .result-name {
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: min(300px, 100%);
+    }
+
+    .result-meta {
+      font-size: 0.75rem;
+      color: var(--text2);
+      margin-top: 2px;
+    }
+
+    .download-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .download-btn:hover { background: #fff; }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 40px clamp(20px, 4vw, 40px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.2rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-contact {
+      color: var(--text2);
+      font-size: 0.8rem;
+    }
+
+    .footer-contact a {
+      color: var(--text2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-contact a:hover { color: var(--accent); }
+
+    .footer-copy {
+      width: 100%;
+      color: #444;
+      font-size: 0.75rem;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; flex-wrap: wrap; }
+      .transform-btns { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="logo" href="index.html">ima<span>jpg</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="privacy.html">Privacy</a></li>
+    </ul>
+  </nav>
+
+  <!-- TOOL -->
+  <main class="tool-page">
+
+    <a class="back-btn" href="index.html">
+      <svg width="20" height="20" viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      All Tools
+    </a>
+
+    <h1>Rotate &amp; Flip Images</h1>
+    <p class="subtitle">Rotate 90°, 180°, or flip your images. Batch supported — same operation applies to all files.</p>
+
+    <!-- DROP ZONE -->
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept="image/*" multiple />
+      <span class="dropzone-icon"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></span>
+      <h3>Drop images here</h3>
+      <p>or <span class="browse">browse files</span> — JPG, PNG, WEBP, BMP supported</p>
+    </div>
+
+    <div class="file-list" id="fileList"></div>
+
+    <!-- OPTIONS -->
+    <div class="options-panel" id="optionsPanel">
+      <p class="option-label">Choose operation</p>
+      <div class="transform-btns">
+
+        <button class="transform-btn active" id="btn-rotate90cw" onclick="selectOp('rotate90cw', this)">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Rotate 90° Right
+        </button>
+
+        <button class="transform-btn" id="btn-rotate90ccw" onclick="selectOp('rotate90ccw', this)">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+          Rotate 90° Left
+        </button>
+
+        <button class="transform-btn" id="btn-rotate180" onclick="selectOp('rotate180', this)">
+          <svg width="18" height="18" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+          Rotate 180°
+        </button>
+
+        <button class="transform-btn" id="btn-fliph" onclick="selectOp('fliph', this)">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3"/><path d="M16 3h3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-3"/><line x1="12" y1="3" x2="12" y2="21" stroke-dasharray="3 3"/></svg>
+          Flip Horizontal
+        </button>
+
+        <button class="transform-btn" id="btn-flipv" onclick="selectOp('flipv', this)">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v3"/><path d="M21 16v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3"/><line x1="3" y1="12" x2="21" y2="12" stroke-dasharray="3 3"/></svg>
+          Flip Vertical
+        </button>
+
+      </div>
+    </div>
+
+    <p class="privacy-note">
+      <svg width="14" height="14" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Your files are processed entirely in your browser. Nothing is uploaded to any server.
+    </p>
+
+    <button class="convert-btn" id="processBtn" onclick="processFiles()">Rotate Images</button>
+
+    <!-- RESULTS -->
+    <div class="results-section" id="resultsSection">
+      <div class="results-header">
+        <span class="results-title">Done — Download your files</span>
+        <button class="download-all-btn" id="downloadAllBtn" onclick="downloadAll()">Download All</button>
+      </div>
+      <div id="resultsList"></div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <a class="footer-logo" href="index.html">ima<span>jpg</span></a>
+    <ul class="footer-links">
+      <li><a href="index.html">Tools</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="privacy.html">Privacy Policy</a></li>
+    </ul>
+    <div class="footer-contact">
+      <span style="color:#555;font-size:0.75rem;display:block;margin-bottom:3px;letter-spacing:1px;text-transform:uppercase;font-weight:600">Contact</span>
+      <a href="mailto:atom-wrek@proton.me">atom-wrek@proton.me</a>
+    </div>
+    <div class="footer-copy">
+      © <span id="footerYear"></span> Imajpg · A project by Atom_Wrek · All processing done in your browser.
+    </div>
+  </footer>
+
+  <script>
+    // Copyright year
+    const y = new Date().getFullYear();
+    document.getElementById('footerYear').textContent = y > 2026 ? `2026–${y}` : '2026';
+
+    // State
+    let selectedFiles = [];
+    let currentOp = 'rotate90cw';
+    let processedBlobs = [];
+
+    // Format file size
+    function fmtSize(bytes) {
+      if (bytes < 1024) return bytes + ' B';
+      if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+      return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+    }
+
+    // Get output extension from MIME
+    function mimeToExt(mime) {
+      const map = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/bmp': 'bmp' };
+      return map[mime] || 'png';
+    }
+
+    // Determine best output MIME — preserve format, fallback PNG
+    function getOutputMime(file) {
+      const supported = ['image/jpeg', 'image/png', 'image/webp'];
+      return supported.includes(file.type) ? file.type : 'image/png';
+    }
+
+    // Select operation
+    function selectOp(op, btn) {
+      currentOp = op;
+      document.querySelectorAll('.transform-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      updateProcessBtn();
+    }
+
+    // Update process button label
+    function updateProcessBtn() {
+      const labels = {
+        rotate90cw: 'Rotate Images 90° Right',
+        rotate90ccw: 'Rotate Images 90° Left',
+        rotate180: 'Rotate Images 180°',
+        fliph: 'Flip Images Horizontally',
+        flipv: 'Flip Images Vertically'
+      };
+      document.getElementById('processBtn').textContent = labels[currentOp] || 'Rotate Images';
+    }
+
+    // Handle file selection
+    function handleFiles(files) {
+      const arr = Array.from(files).filter(f => f.type.startsWith('image/'));
+      if (!arr.length) return;
+      selectedFiles = arr;
+      renderFileList();
+      document.getElementById('optionsPanel').classList.add('visible');
+      document.getElementById('processBtn').classList.add('visible');
+      document.getElementById('resultsSection').classList.remove('visible');
+      document.getElementById('resultsList').innerHTML = '';
+      processedBlobs = [];
+      updateProcessBtn();
+    }
+
+    function renderFileList() {
+      const list = document.getElementById('fileList');
+      list.innerHTML = '';
+      selectedFiles.forEach(file => {
+        const item = document.createElement('div');
+        item.className = 'file-item';
+        const thumb = document.createElement('img');
+        thumb.className = 'file-thumb';
+        thumb.src = URL.createObjectURL(file);
+        const info = document.createElement('div');
+        info.className = 'file-info';
+        const name = document.createElement('div');
+        name.className = 'file-name';
+        name.textContent = file.name;
+        const size = document.createElement('div');
+        size.className = 'file-size';
+        size.textContent = fmtSize(file.size);
+        info.appendChild(name);
+        info.appendChild(size);
+        item.appendChild(thumb);
+        item.appendChild(info);
+        list.appendChild(item);
+      });
+    }
+
+    // Apply transformation on canvas
+    function transformImage(img, op) {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const w = img.naturalWidth;
+      const h = img.naturalHeight;
+
+      if (op === 'rotate90cw' || op === 'rotate90ccw') {
+        canvas.width = h;
+        canvas.height = w;
+      } else {
+        canvas.width = w;
+        canvas.height = h;
+      }
+
+      ctx.save();
+      if (op === 'rotate90cw') {
+        ctx.translate(h, 0);
+        ctx.rotate(Math.PI / 2);
+      } else if (op === 'rotate90ccw') {
+        ctx.translate(0, w);
+        ctx.rotate(-Math.PI / 2);
+      } else if (op === 'rotate180') {
+        ctx.translate(w, h);
+        ctx.rotate(Math.PI);
+      } else if (op === 'fliph') {
+        ctx.translate(w, 0);
+        ctx.scale(-1, 1);
+      } else if (op === 'flipv') {
+        ctx.translate(0, h);
+        ctx.scale(1, -1);
+      }
+      ctx.drawImage(img, 0, 0);
+      ctx.restore();
+      return canvas;
+    }
+
+    // Process all files
+    function processFiles() {
+      if (!selectedFiles.length) return;
+      const btn = document.getElementById('processBtn');
+      btn.disabled = true;
+      btn.textContent = 'Processing…';
+      processedBlobs = [];
+
+      let done = 0;
+      selectedFiles.forEach((file, i) => {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = transformImage(img, currentOp);
+          const mime = getOutputMime(file);
+          canvas.toBlob(blob => {
+            const ext = mimeToExt(mime);
+            const baseName = file.name.replace(/\.[^.]+$/, '');
+            const opSuffix = { rotate90cw: '_rot90cw', rotate90ccw: '_rot90ccw', rotate180: '_rot180', fliph: '_fliph', flipv: '_flipv' };
+            const outName = baseName + (opSuffix[currentOp] || '_rotated') + '.' + ext;
+            processedBlobs[i] = { blob, name: outName };
+            done++;
+            if (done === selectedFiles.length) renderResults();
+          }, mime, 0.92);
+          URL.revokeObjectURL(img.src);
+        };
+        img.src = URL.createObjectURL(file);
+      });
+    }
+
+    function renderResults() {
+      const list = document.getElementById('resultsList');
+      list.innerHTML = '';
+      processedBlobs.forEach(item => {
+        const url = URL.createObjectURL(item.blob);
+        const row = document.createElement('div');
+        row.className = 'result-item';
+        const thumb = document.createElement('img');
+        thumb.className = 'result-thumb';
+        thumb.src = url;
+        const info = document.createElement('div');
+        info.className = 'result-info';
+        const name = document.createElement('div');
+        name.className = 'result-name';
+        name.textContent = item.name;
+        const meta = document.createElement('div');
+        meta.className = 'result-meta';
+        meta.textContent = fmtSize(item.blob.size);
+        info.appendChild(name);
+        info.appendChild(meta);
+        const dl = document.createElement('a');
+        dl.className = 'download-btn';
+        dl.href = url;
+        dl.download = item.name;
+        dl.textContent = 'Download';
+        row.appendChild(thumb);
+        row.appendChild(info);
+        row.appendChild(dl);
+        list.appendChild(row);
+      });
+
+      document.getElementById('resultsSection').classList.add('visible');
+      document.getElementById('downloadAllBtn').style.display = processedBlobs.length > 1 ? '' : 'none';
+
+      const btn = document.getElementById('processBtn');
+      btn.disabled = false;
+      updateProcessBtn();
+
+      document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function downloadAll() {
+      processedBlobs.forEach((item, i) => {
+        setTimeout(() => {
+          const a = document.createElement('a');
+          a.href = URL.createObjectURL(item.blob);
+          a.download = item.name;
+          a.click();
+        }, i * 150);
+      });
+    }
+
+    // Drag and drop
+    const dropzone = document.getElementById('dropzone');
+    const fileInput = document.getElementById('fileInput');
+
+    dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('dragover'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+    dropzone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropzone.classList.remove('dragover');
+      handleFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener('change', () => handleFiles(fileInput.files));
+  </script>
+
+</body>
+</html>
