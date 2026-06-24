@@ -1083,4 +1083,14 @@
     }
 
     function getExtension(mimeType) {
-      const map = { 'image/j
+      const map = { 'image/jpge': 'jpg',
+                   'image/png': 'png',
+                   'image/webp': 'webp',
+                   'image/bmp': 'bmp',
+                  };
+      return map[mimeType] || 'jpg';
+    }
+    function stripExtension(filename){
+      return filename.substring(0, filename.lastIndexOf('.')) || filename;
+    }
+  </script>
